@@ -1,0 +1,32 @@
+en
+config t
+hostname dhcp-server
+int f0/0
+ip add 192.168.1.1 255.255.255.0
+no sh
+exit
+do sh ip int br
+ip dhcp excluded-address 192.168.1.1
+ip dhcp excluded-address 192.168.2.1
+ip dhcp pool 192.168.1.1
+network 192.168.1.0 255.255.255.0
+default-router 192.168.1.1
+dns-server 8.8.8.8
+exit 
+dhcp pool 192.168.2.1
+network 192.168.2.0 255.255.255.0
+default-router 192.168.2.1
+dns-server 8.8.8.8
+exit
+exit
+sh run | sec dhcp
+
+open pc from switch1 and laptop from switch2
+in both 
+1-	Go to desktop
+2-	Then to ip config
+3-	Click on dhcp -> it will request the ip from router and assign ip 
+4-	Do this step for all the hosts on both switches
+5-	After automatic ip assignment 
+6-	Go to the desktop -> command prompt
+7-	Ping an ip from other switch network using -> ping 192.168.1.2
